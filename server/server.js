@@ -18,10 +18,17 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Client folder serveren
+app.use(express.static(path.join(process.cwd(), "client")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "client", "index.html"));
+});
+
 const upload = multer({ dest: "uploads/" });
 const DB_DIR = path.join(process.cwd(), "faiss_store");
 
-// Setup voor Azure OpenAI
+// Azure OpenAI setup
 const embeddings = new AzureOpenAIEmbeddings({
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
     azureOpenAIApiVersion: process.env.AZURE_OPENAI_API_VERSION,
@@ -42,24 +49,22 @@ async function extractTextFromPDF(filePath) {
     return text;
 }
 
-// Route: PDF uploaden en verwerken
+// PDF upload Route
 app.post("/upload", upload.single("file"), async (req, res) => {
     try {
         const filePath = req.file.path;
         const text = await extractTextFromPDF(filePath);
         const docs = [new Document({ pageContent: text })];
 
-        // Probeer FAISS store te laden, anders nieuwe maken
         let vectorStore;
         try {
             vectorStore = await FaissStore.load(DB_DIR, embeddings);
-            console.log("Bestaande vectorstore geladen.");
+            console.log("✅ Bestaande vectorstore geladen.");
         } catch {
             vectorStore = await FaissStore.fromDocuments([], embeddings);
             console.log("Nieuwe vectorstore aangemaakt.");
         }
 
-        // Voeg nieuwe documenten toe en sla op
         await vectorStore.addDocuments(docs);
         await fs.rm(DB_DIR, { recursive: true, force: true });
         await vectorStore.save(DB_DIR);
@@ -72,7 +77,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     }
 });
 
-// Route: Vraag stellen
+// Vraag stellen
 app.post("/ask", async (req, res) => {
     const vraag = req.body.vraag;
     if (!vraag) {
@@ -80,7 +85,6 @@ app.post("/ask", async (req, res) => {
         return;
     }
 
-    // Streaming headers instellen
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
@@ -99,7 +103,6 @@ app.post("/ask", async (req, res) => {
             azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
         });
 
-        // Streaming antwoord ophalen en naar client sturen
         const stream = await model.stream(`Gebruik deze context:\n${context}\nVraag: ${vraag}`);
 
         for await (const chunk of stream) {
