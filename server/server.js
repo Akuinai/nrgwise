@@ -53,10 +53,10 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         let vectorStore;
         try {
             vectorStore = await FaissStore.load(DB_DIR, embeddings);
-            console.log("✅ Bestaande vectorstore geladen.");
+            console.log("Bestaande vectorstore geladen.");
         } catch {
             vectorStore = await FaissStore.fromDocuments([], embeddings);
-            console.log("⚠️ Nieuwe vectorstore aangemaakt.");
+            console.log("Nieuwe vectorstore aangemaakt.");
         }
 
         // Voeg nieuwe documenten toe en sla op
@@ -64,10 +64,10 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         await fs.rm(DB_DIR, { recursive: true, force: true });
         await vectorStore.save(DB_DIR);
 
-        console.log("✅ Document opgeslagen.");
+        console.log("Document opgeslagen.");
         res.json({ message: "PDF succesvol verwerkt en opgeslagen." });
     } catch (error) {
-        console.error("❌ Fout bij verwerken PDF:", error);
+        console.error("Fout bij verwerken PDF:", error);
         res.status(500).json({ message: "Fout bij uploaden." });
     }
 });
@@ -111,7 +111,7 @@ app.post("/ask", async (req, res) => {
         res.write(`data: [DONE]\n\n`);
         res.end();
     } catch (error) {
-        console.error("❌ Fout bij beantwoorden vraag:", error);
+        console.error("Fout bij beantwoorden vraag:", error);
         res.write(`data: [ERROR]\n\n`);
         res.end();
     }

@@ -36,6 +36,15 @@ AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME=je-openai-embedding-deployment-naam
 	•	De gebruiker kan via de client vragen stellen over zijn eigen documenten
 	•	De server zoekt relevante stukken tekst en laat Azure OpenAI een antwoord genereren
 
+### 🎯 Categorie en Doelgroep
+	•	Categorie: Energieadvies
+	•	Doelgroep:
+
+	•	Particuliere huiseigenaren en huurders die inzicht willen krijgen in hun energieverbruik, met als doel kosten te besparen en duurzamer te wonen. Door energierapporten te uploaden en slimme vragen te stellen, kunnen gebruikers eenvoudig gepersonaliseerd advies ontvangen gebaseerd op hun eigen gegevens.
+
+
+
+
 
 
 

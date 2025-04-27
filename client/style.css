@@ -73,9 +73,9 @@ button:hover {
     border-radius: 10px;
     color: #33691e;
     min-height: 150px;
-    white-space: pre-wrap; /* behoud enters en afbrekingen */
-    word-wrap: break-word; /* 🔥 forceer afbreken van lange woorden */
-    overflow-wrap: break-word; /* 🔥 beter voor cross-browser */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1);
 }

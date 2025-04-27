@@ -1,8 +1,6 @@
-// Client-side script voor uploaden van PDF en stellen van vragen
-
 let loading = false; // Houdt bij of een vraag bezig is
 
-// Functie: PDF uploaden
+// PDF uploaden
 async function uploadFile() {
     const fileInput = document.getElementById("fileInput");
     const files = fileInput.files;
@@ -22,15 +20,15 @@ async function uploadFile() {
                 body: formData,
             });
             const data = await response.json();
-            alert(`✅ Bestand "${file.name}" geüpload: ${data.message}`);
+            alert(`Bestand "${file.name}" geüpload: ${data.message}`);
         } catch (error) {
             console.error(error);
-            alert(`🚨 Fout bij uploaden van "${file.name}".`);
+            alert(`Fout bij uploaden van "${file.name}".`);
         }
     }
 }
 
-// Functie: Vraag stellen aan server
+// Vraag stellen aan server
 async function stelVraag(e) {
     e.preventDefault();
 
@@ -47,7 +45,7 @@ async function stelVraag(e) {
     }
 
     const responseBox = document.getElementById("response");
-    responseBox.innerText = ""; // Maak het antwoordvak leeg
+    responseBox.innerText = "";
     loading = true;
 
     try {
@@ -75,13 +73,13 @@ async function stelVraag(e) {
                         loading = false;
                         return;
                     }
-                    responseBox.innerText += data + " "; // Voeg elke stukje toe
+                    responseBox.innerText += data + " ";
                 }
             }
         }
     } catch (error) {
         console.error(error);
-        responseBox.innerText = "Er ging iets mis 😢";
+        responseBox.innerText = "Er ging iets mis!";
         loading = false;
     }
 }
