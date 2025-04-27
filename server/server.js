@@ -18,11 +18,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Client folder serveren
-app.use(express.static(path.join(process.cwd(), "client")));
+// Maak de client folder toegankelijk
+app.use(express.static(path.join(process.cwd(), "../client")));
 
+// Serve de index.html bij root
 app.get("/", (req, res) => {
-    res.sendFile(path.join(process.cwd(), "client", "index.html"));
+    res.sendFile(path.join(process.cwd(), "../client", "index.html"));
 });
 
 const upload = multer({ dest: "uploads/" });
