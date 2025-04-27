@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>NrgWise</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>NrgWise Coach</h1>
+
+<h2>1. Upload je energierapport</h2>
+<input type="file" id="fileInput" multiple>
+<button id="uploadButton">Upload</button> <!-- Let op: geen onclick meer -->
+
+<h2>2. Stel je vraag</h2>
+<form id="questionForm">
+    <input type="text" id="chatfield" placeholder="Bijvoorbeeld: Hoe kan ik gas besparen?">
+    <button type="submit">Vraag advies!</button>
+</form>
+
+<h2>AI Advies:</h2>
+<div id="response"></div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>

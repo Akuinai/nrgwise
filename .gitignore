@@ -1,0 +1,19 @@
+# Node modules
+server/node_modules/
+client/node_modules/
+
+# FAISS database
+server/faiss_store/
+
+# Uploads map
+server/uploads/
+
+# Environment variables
+server/.env
+
+# MacOS systeem bestanden
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
